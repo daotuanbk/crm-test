@@ -1,17 +1,19 @@
-# Techkids Software Web Template
+# Techkids Software
 
 ## Introduction
+CRM
 
-This project is a web template used as a starter kit for Techkids Software web projects.
+## Requirements
+NodeJS
+MongoDB
+npm
 
 ## Getting Started
 
-TODO: TBA
+1. Restore database: npm run dumpdb
+2. Run mongodb
+3. Start project: npm run dev-fe
 
 ## Build and Test
 
-TODO: TBA
-
-## Contribute
-
-TODO: TBA
+Build: npm run build
