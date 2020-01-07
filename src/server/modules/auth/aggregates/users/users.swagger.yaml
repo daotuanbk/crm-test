@@ -1,0 +1,496 @@
+tags:
+- name: users
+  description: Admin operations about users
+paths:
+  /users:
+    get:
+      tags:
+      - users
+      summary: Find users
+      operationId: findUsers
+      parameters:
+      - name: search
+        in: query
+        description: search
+        required: false
+        schema:
+          type: string
+      - name: roles
+        in: query
+        description: filter by roles
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: centreId
+        in: query
+        description: Centre Id
+        required: false
+        schema:
+          type: string
+      - name: assignable
+        in: query
+        description: Assignable
+        required: false
+        schema:
+          type: boolean
+      - name: filter
+        in: query
+        description: custom filter
+        required: false
+        schema:
+          type: array
+          items:
+            type: object
+      - name: first
+        in: query
+        description: number of records returned
+        required: true
+        schema:
+          type: number
+      - name: sortBy
+        in: query
+        description: sort field
+        required: true
+        schema:
+          type: string
+      - name: before
+        in: query
+        description: before token
+        required: false
+        schema:
+          type: string
+      - name: after
+        in: query
+        description: after token
+        required: false
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindUsersResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+      - Bearer: []
+    post:
+      tags:
+      - users
+      summary: Create user
+      operationId: createUser
+      requestBody:
+        $ref: '#/components/requestBodies/CreateUserPayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+      - Bearer: []
+  /users/get-all-users:
+    get:
+      tags:
+      - users
+      summary: Get all users
+      operationId: getAllUsers
+      parameters:
+        - name: search
+          in: query
+          description: search
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: number of records returned
+          required: false
+          schema:
+            type: number
+            default: 100
+        - name: page
+          in: query
+          description: current page
+          required: false
+          schema:
+            type: number
+            default: 1
+        - name: sortBy
+          in: query
+          description: sort field
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindAllUsersResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+      - Bearer: []
+  /users/get-salesman:
+    get:
+      tags:
+        - users
+      summary: Get all salesman
+      operationId: getAllSalesman
+      parameters:
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindAllUsersResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /users/get-interviewer:
+    get:
+      tags:
+        - users
+      summary: Get all interviewers
+      operationId: getAllInterviewers
+      parameters:
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindAllUsersResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /users/get-permissions/{id}:
+    get:
+      tags:
+      - users
+      summary: Find permissions by user id
+      operationId: getPermissions
+      parameters:
+      - name: id
+        in: path
+        description: userId
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionsResult'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+      - Bearer: []
+  /users/{userId}:
+    get:
+      tags:
+      - users
+      summary: Find user by id
+      operationId: findUserById
+      parameters:
+      - name: userId
+        in: path
+        description: userId
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+      - Bearer: []
+    patch:
+      tags:
+      - users
+      summary: Update user
+      operationId: updateUser
+      parameters:
+      - name: userId
+        in: path
+        description: userId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateUserPayload'
+      responses:
+        200:
+          description: successful operation
+        201:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+      - Bearer: []
+  /users/check-email-exist/{email}:
+    get:
+      tags:
+      - users
+      summary: Check email exist
+      operationId: checkEmailExist
+      parameters:
+      - name: email
+        in: path
+        description: email
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckEmailExistResult'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+      - Bearer: []
+components:
+  schemas:
+    RegisterUserPayload:
+      type: object
+      properties:
+        idToken:
+          type: string
+    FindUsersResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        before:
+          type: string
+        after:
+          type: string
+    FindAllUsersResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        email:
+          type: string
+          example: thinhtran@techkids.io
+        familyName:
+          type: string
+          example: Nguyen
+        givenName:
+          type: string
+          example: Van A
+        fullName:
+          type: string
+          example: Nguyen Van A
+        phoneNo:
+          type: string
+          example: +84363394468
+        address:
+          type: string
+          example: so 35, hem 6, quan 10, TP.HCM
+        description:
+          type: string
+          example: Yeu the thao, thich choi game, ...
+        avatarUrl:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283.jpg
+        dob:
+          type: number
+          example: 123123123
+        gender:
+          type: string
+          example: male
+        loginDetail:
+          type: object
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/FacebookLogin'
+            - $ref: '#/components/schemas/GoogleLogin'
+            - $ref: '#/components/schemas/PhoneLogin'
+            - $ref: '#/components/schemas/EmailLogin'
+        roles:
+          type: array
+          items:
+            type: string
+          example:
+          - 4ddde319cf4cc467858e8152b58b3283
+          - 4ddde319cf4cc467858e8152b58b3284
+        completeSignUp:
+          type: boolean
+          example: false
+        centreId:
+          type: string
+        isActive:
+          type: boolean
+          example: true
+        createdAt:
+          type: number
+        createdBy:
+          type: number
+    UpdateUserPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          enum: [updateDetail]
+        payload:
+          type: object
+          properties:
+            roles:
+              type: array
+              items:
+                type: string
+              example:
+              - 4ddde319cf4cc467858e8152b58b3283
+              - 4ddde319cf4cc467858e8152b58b3333
+            familyName:
+              type: string
+              example: Nguyen
+            givenName:
+              type: string
+              example: Van A
+            email:
+              type: string
+              example: tienloitechkids@gmail.com
+    ActivateUserPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          enum: [activate]
+    DeactivateUserPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          enum: [deactivate]
+    UpdateAvatarPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          enum: [updateAvatar]
+        data:
+          type: object
+          properties:
+            avatarUrl:
+              type: string
+    CreateUserPayload:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+          example:
+          - 4ddde319cf4cc467858e8152b58b3283
+          - 4ddde319cf4cc46785812342b58b3284
+        familyName:
+          type: string
+          example: Nguyen
+        givenName:
+          type: string
+          example: Van A
+  requestBodies:
+    CreateUserPayload:
+      description: Create user params
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateUserPayload'
+      required: true
+    UpdateUserPayload:
+      description: Update user params
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/UpdateUserPayload'
+            - $ref: '#/components/schemas/ActivateUserPayload'
+            - $ref: '#/components/schemas/DeactivateUserPayload'
+      required: true
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

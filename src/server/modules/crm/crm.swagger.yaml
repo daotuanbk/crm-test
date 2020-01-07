@@ -1,0 +1,4740 @@
+openapi: 3.0.0
+tags:
+  - name: leads
+    description: Admin operations about leads
+  - name: system-config
+    description: Admin operations about leads
+  - name: lists
+    description: Admin operations about lists
+  - name: product-combo
+    description: Admin operations about product combo
+  - name: product-course
+    description: Admin operations about product course
+  - name: campaign
+    description: Admin operations about campaign
+  - name: lead-task
+    description: Admin operations about lead task
+  - name: lead-conversation
+    description: Admin operations about lead conversation
+  - name: lead-message-detail
+    description: Admin operations about lead message detail
+  - name: lead-filters
+    description: Admin operations about lead filter
+  - name: lead-attachment
+  - name: email-template
+    description: Admin operations about email template
+  - name: lead-notification
+  - name: prospecting-list
+  - name: root-contact
+paths:
+  /lead-filters/customs/check-filter-name/{filterName}:
+    get:
+      tags:
+        - lead-filters
+      summary: Check lead filter name exist
+      operationId: checkFilterName
+      parameters:
+        - name: filterName
+          in: path
+          description: filterName
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckFilterNameResult'
+        201:
+          description: successful operation
+        202:
+          description: successful operation
+          content:
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /lead-filters:
+    post:
+      tags:
+        - lead-filters
+      summary: Create lead filter
+      operationId: createLeadFilter
+      requestBody:
+        $ref: '#/components/requestBodies/CreateLeadFilterPayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadFilter'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadFilter'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    get:
+      tags:
+        - lead-filters
+      summary: Find lead filter for an account
+      operationId: findLeadFilters
+      parameters:
+        - name: operation
+          in: query
+          description: operation
+          required: false
+          schema:
+            type: string
+        - name: first
+          in: query
+          description: number of records returned
+          required: true
+          schema:
+            type: number
+        - name: sortBy
+          in: query
+          description: sort field
+          required: true
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: before token
+          required: false
+          schema:
+            type: string
+        - name: after
+          in: query
+          description: after token
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindLeadFiltersResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /lead-filters/{leadFilterId}:
+    delete:
+      tags:
+        - lead-filters
+      summary: Delete lead filter
+      operationId: deleteLeadFilter
+      parameters:
+        - name: leadFilterId
+          in: path
+          description: leadFilterId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+        201:
+          description: successful operation
+        202:
+          description: successful operation
+          content:
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /campaign:
+    get:
+      tags:
+        - campaign
+      summary: Find all campaigns
+      operationId: findCampaigns
+      parameters:
+        - name: operation
+          in: query
+          description: opearation
+          required: false
+          schema:
+            type: string
+        - name: fields
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: search
+          in: query
+          description: search
+          required: false
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: filters
+          required: false
+          schema:
+            type: array
+            items:
+              type: object
+        - name: first
+          in: query
+          description: number of records returned
+          required: true
+          schema:
+            type: number
+        - name: sortBy
+          in: query
+          description: sort field
+          required: true
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: before token
+          required: false
+          schema:
+            type: string
+        - name: after
+          in: query
+          description: after token
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindCampaignsResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    post:
+      tags:
+        - campaign
+      summary: Create Campaign
+      operationId: createCampaign
+      requestBody:
+        $ref: '#/components/requestBodies/CreateCampaignPayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Campaign'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Campaign'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /email-template:
+    get:
+      tags:
+        - email-template
+      summary: Find all email templates
+      operationId: findEmailTemplates
+      parameters:
+        - name: search
+          in: query
+          description: search
+          required: false
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: filters
+          required: false
+          schema:
+            type: array
+            items:
+              type: object
+        - name: first
+          in: query
+          description: number of records returned
+          required: true
+          schema:
+            type: number
+        - name: sortBy
+          in: query
+          description: sort field
+          required: true
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: before token
+          required: false
+          schema:
+            type: string
+        - name: after
+          in: query
+          description: after token
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindEmailTemplatesResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    post:
+      tags:
+        - email-template
+      summary: Create email template
+      operationId: createEmailTemplate
+      requestBody:
+        $ref: '#/components/requestBodies/CreateEmailTemplatePayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailTemplate'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailTemplate'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /email-template/get-all-template:
+    get:
+      tags:
+        - email-template
+      summary: Find all email templates
+      operationId: findAllEmailTemplates
+      parameters:
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindEmailTemplatesResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /email-template/{emailTemplateId}:
+    get:
+      tags:
+        - email-template
+      summary: Find email template by id
+      operationId: findEmailTemplateById
+      parameters:
+        - name: emailTemplateId
+          in: path
+          description: emailTemplateId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailTemplate'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    patch:
+      tags:
+        - email-template
+      summary: Update email template
+      operationId: updateEmailTemplate
+      parameters:
+        - name: emailTemplateId
+          in: path
+          description: emailTemplateId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateEmailTemplatePayload'
+      responses:
+        200:
+          description: successful operation
+        201:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    delete:
+      tags:
+        - email-template
+      summary: Delete email template
+      operationId: removeEmailTemplate
+      parameters:
+        - name: emailTemplateId
+          in: path
+          description: emailTemplateId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /email-template-config:
+    get:
+      tags:
+        - email-template-config
+      summary: Find all email template configs
+      operationId: findEmailTemplateConfigs
+      parameters:
+        - name: search
+          in: query
+          description: search
+          required: false
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: filters
+          required: false
+          schema:
+            type: array
+            items:
+              type: object
+        - name: first
+          in: query
+          description: number of records returned
+          required: true
+          schema:
+            type: number
+        - name: sortBy
+          in: query
+          description: sort field
+          required: true
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: before token
+          required: false
+          schema:
+            type: string
+        - name: after
+          in: query
+          description: after token
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindEmailTemplateConfigsResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    post:
+      tags:
+        - email-template
+      summary: Create email template config
+      operationId: createEmailTemplateConfig
+      requestBody:
+        $ref: '#/components/requestBodies/CreateEmailTemplateConfigPayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailTemplateConfig'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailTemplateConfig'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /email-template-config/get-by-name:
+    get:
+      tags:
+        - email-template-config
+      summary: Find email template config by name
+      operationId: findEmailTemplateConfigByName
+      parameters:
+        - name: name
+          in: query
+          description: name
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindEmailTemplateConfigByNameResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /email-template-config/get-all:
+    get:
+      tags:
+        - email-template-config
+      summary: Find all email template config
+      operationId: findAllEmailTemplateConfig
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindEmailTemplateConfigByNameResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /email-template-config/find-by-ids:
+    get:
+      tags:
+        - email-template-config
+      summary: Find email template config by ids
+      operationId: findEmailTemplateConfigbyIds
+      parameters:
+        - name: ids
+          in: query
+          description: ids
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindEmailTemplateConfigByNameResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /email-template-config/{emailTemplateConfigId}:
+    get:
+      tags:
+        - email-template-config
+      summary: Find email template config by id
+      operationId: findEmailTemplateConfigById
+      parameters:
+        - name: emailTemplateConfigId
+          in: path
+          description: emailTemplateConfigId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailTemplateConfig'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    patch:
+      tags:
+        - email-template-config
+      summary: Update email template config
+      operationId: updateEmailTemplateConfig
+      parameters:
+        - name: emailTemplateConfigId
+          in: path
+          description: emailTemplateConfigId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateEmailTemplateConfigPayload'
+      responses:
+        200:
+          description: successful operation
+        201:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /default-task:
+    get:
+      tags:
+        - default-task
+      summary: Find all default tasks
+      operationId: findDefaultTasks
+      parameters:
+        - name: search
+          in: query
+          description: search
+          required: false
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: filters
+          required: false
+          schema:
+            type: array
+            items:
+              type: object
+        - name: first
+          in: query
+          description: number of records returned
+          required: true
+          schema:
+            type: number
+        - name: sortBy
+          in: query
+          description: sort field
+          required: true
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: before token
+          required: false
+          schema:
+            type: string
+        - name: after
+          in: query
+          description: after token
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindDefaultTasksResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    post:
+      tags:
+        - default-task
+      summary: Create Default Tasks
+      operationId: createDefaultTask
+      requestBody:
+        $ref: '#/components/requestBodies/CreateDefaultTaskPayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultTask'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultTask'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /default-task/{defaultTaskId}:
+    get:
+      tags:
+        - default-task
+      summary: Find default-tasl by id
+      operationId: findDefaultTaskById
+      parameters:
+        - name: defaultTaskId
+          in: path
+          description: defaultTaskId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultTask'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    patch:
+      tags:
+        - default-task
+      summary: Update Campaign
+      operationId: updateDefaultTask
+      parameters:
+        - name: defaultTaskId
+          in: path
+          description: defaultTaskId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateDefaultTaskPayload'
+      responses:
+        200:
+          description: successful operation
+        201:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /campaign/{campaignId}:
+    get:
+      tags:
+        - campaign
+      summary: Find campaign by id
+      operationId: findCampaignById
+      parameters:
+        - name: campaignId
+          in: path
+          description: campaignId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Campaign'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    patch:
+      tags:
+        - campaign
+      summary: Update Campaign
+      operationId: updateCampaign
+      parameters:
+        - name: campaignId
+          in: path
+          description: campaignId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateCampaignPayload'
+      responses:
+        200:
+          description: successful operation
+        201:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    delete:
+      tags:
+        - campaign
+      summary: Delete campaign
+      operationId: removeCampaign
+      parameters:
+        - name: campaignId
+          in: path
+          description: campaignId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /lead-task:
+    post:
+      tags:
+        - lead-task
+      summary: Create Lead Task
+      operationId: createLeadTask
+      requestBody:
+        $ref: '#/components/requestBodies/CreateLeadTaskPayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadTask'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadTask'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /lead-task/{leadTaskId}:
+    get:
+      tags:
+        - lead-task
+      summary: Find lead task by id
+      operationId: findLeadTaskById
+      parameters:
+        - name: leadTaskId
+          in: path
+          description: leadTaskId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadTask'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    patch:
+      tags:
+        - lead-task
+      summary: Update Lead Task
+      operationId: updateLeadTask
+      parameters:
+        - name: leadTaskId
+          in: path
+          description: leadTaskId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateLeadTaskPayload'
+      responses:
+        200:
+          description: successful operation
+        201:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    delete:
+      tags:
+        - lead-task
+      summary: Delete Lead Task
+      operationId: removeLeadTask
+      parameters:
+        - name: leadTaskId
+          in: path
+          description: leadTaskId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /lead-task/get-lead-tasks/{leadId}:
+    get:
+      tags:
+        - lead-task
+      summary: Find lead tasks by leadId
+      operationId: findLeadTasksByLeadId
+      parameters:
+        - name: leadId
+          in: path
+          description: leadId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindAllLeadTasksResult'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /lead-task/get-all-lead-tasks:
+    get:
+      tags:
+        - lead-task
+      summary: Find lead tasks
+      operationId: findAllLeadTasks
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindAllLeadTasksResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /lead-payment-transaction:
+    get:
+      tags:
+        - lead-payment-transaction
+      summary: Find lead payment transaction
+      operationId: findLeadPaymentTransaction
+      parameters:
+      - name: leadId
+        in: query
+        description: leadId
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindLeadPaymentTransaction'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    post:
+      tags:
+        - lead-payment-transaction
+      summary: Create Lead Payment Transaction
+      operationId: createLeadPaymentTransaction
+      requestBody:
+        $ref: '#/components/requestBodies/CreateLeadPaymentTransaction'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadPaymentTransaction'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadPaymentTransaction'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /lead-payment-transaction/{leadPaymentTransactionId}:
+    get:
+      tags:
+        - lead-payment-transaction
+      summary: Find lead payment transaction by id
+      operationId: findLeadPaymentTransactionById
+      parameters:
+        - name: leadPaymentTransactionId
+          in: path
+          description: leadPaymentTransactionId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadPaymentTransaction'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    patch:
+      tags:
+        - lead-payment-transaction
+      summary: Update Lead Payment Transaction
+      operationId: updateLeadPaymentTransaction
+      parameters:
+        - name: leadPaymentTransactionId
+          in: path
+          description: leadPaymentTransactionId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateLeadPaymentTransaction'
+      responses:
+        200:
+          description: successful operation
+        201:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    delete:
+      tags:
+        - lead-payment-transaction
+      summary: Delete lead payment transaction
+      operationId: deleteLeadPaymentTransaction
+      parameters:
+        - name: leadPaymentTransactionId
+          in: path
+          description: leadPaymentTransactionId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+        201:
+          description: successful operation
+        202:
+          description: successful operation
+          content:
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /lead-note:
+    get:
+      tags:
+        - lead-note
+      summary: Find lead note
+      operationId: findLeadNote
+      parameters:
+        - name: operation
+          in: query
+          description: operation
+          required: false
+          schema:
+            type: string
+        - name: fields
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindLeadNote'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    post:
+      tags:
+        - lead-note
+      summary: Create Lead Note
+      operationId: createLeadNote
+      requestBody:
+        $ref: '#/components/requestBodies/CreateLeadNote'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadNote'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadNote'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /lead-note/{leadNoteId}:
+    get:
+      tags:
+        - lead-note
+      summary: Find lead note by id
+      operationId: findLeadNoteById
+      parameters:
+        - name: leadNoteId
+          in: path
+          description: leadNoteId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadNote'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    patch:
+      tags:
+        - lead-note
+      summary: Update Lead Note
+      operationId: updateLeadNote
+      parameters:
+        - name: leadNoteId
+          in: path
+          description: leadNoteId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateLeadNote'
+      responses:
+        200:
+          description: successful operation
+        201:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /prospecting-list:
+    get:
+      tags:
+        - prospecting-list
+      summary: Find prospecting-list
+      operationId: findProspectingLists
+      parameters:
+        - name: operation
+          in: query
+          schema:
+            type: string
+        - name: fields
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: object
+        - name: search
+          in: query
+          description: search
+          required: false
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: filters
+          required: false
+          schema:
+            type: string
+        - name: first
+          in: query
+          description: number of records returned
+          required: false
+          schema:
+            type: number
+        - name: sortBy
+          in: query
+          description: sort field
+          required: false
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: before token
+          required: false
+          schema:
+            type: string
+        - name: after
+          in: query
+          description: after token
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindAllProspectingListsResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    post:
+      tags:
+        - prospecting-list
+      summary: Create prospecting-list
+      operationId: createProspectingList
+      requestBody:
+        $ref: '#/components/requestBodies/CreateProspectingListPayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProspectingList'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProspectingList'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /prospecting-list/{prospectingListId}:
+    get:
+      tags:
+        - prospecting-list
+      summary: Find prospecting-list by id
+      operationId: findProspectingListById
+      parameters:
+        - name: prospectingListId
+          in: path
+          description: prospectingListId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProspectingList'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    patch:
+      tags:
+        - prospecting-list
+      summary: Update prospecting-list
+      operationId: updateProspectingList
+      parameters:
+        - name: prospectingListId
+          in: path
+          description: prospectingListId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateProspectingListPayload'
+      responses:
+        200:
+          description: successful operation
+        201:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    delete:
+      tags:
+        - prospecting-list
+      summary: Delete prospecting-list
+      operationId: removeProspectingList
+      parameters:
+        - name: prospectingListId
+          in: path
+          description: prospectingListId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /lead-appointment:
+    get:
+      tags:
+        - lead-appointment
+      summary: Find lead appointments
+      operationId: findLeadAppointments
+      parameters:
+        - name: operation
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: fields
+          in: query
+          required: false
+          schema:
+            type: object
+        - name: search
+          in: query
+          description: search
+          required: false
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: filters
+          required: false
+          schema:
+            type: array
+            items:
+              type: object
+        - name: first
+          in: query
+          description: number of records returned
+          required: false
+          schema:
+            type: number
+        - name: sortBy
+          in: query
+          description: sort field
+          required: false
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: before token
+          required: false
+          schema:
+            type: string
+        - name: after
+          in: query
+          description: after token
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindAllLeadAppointmentsResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    post:
+      tags:
+        - lead-appointment
+      summary: Create Lead Appointment
+      operationId: createLeadAppointment
+      requestBody:
+        $ref: '#/components/requestBodies/CreateLeadAppointmentPayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadAppointment'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadAppointment'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /lead-appointment/{leadAppointmentId}:
+    get:
+      tags:
+        - lead-appointment
+      summary: Find lead appointment by id
+      operationId: findLeadAppointmentById
+      parameters:
+        - name: leadAppointmentId
+          in: path
+          description: leadAppointmentId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadAppointment'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    patch:
+      tags:
+        - lead-appointment
+      summary: Update Lead Appointment
+      operationId: updateLeadAppointment
+      parameters:
+        - name: leadAppointmentId
+          in: path
+          description: leadAppointmentId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateLeadAppointmentPayload'
+      responses:
+        200:
+          description: successful operation
+        201:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    delete:
+      tags:
+        - lead-appointment
+      summary: Delete Lead Appointment
+      operationId: removeLeadAppointment
+      parameters:
+        - name: leadAppointmentId
+          in: path
+          description: leadAppointmentId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /lead-appointment/get-lead-appointments/{leadId}:
+    get:
+      tags:
+        - lead-appointment
+      summary: Find lead appointments by leadId
+      operationId: findLeadAppointmentsByLeadId
+      parameters:
+        - name: leadId
+          in: path
+          description: leadId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindAllLeadAppointmentsResult'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /lead-appointment/get-all-lead-appointments:
+    get:
+      tags:
+        - lead-appointment
+      summary: Find lead appointments
+      operationId: findAllLeadAppointments
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindAllLeadAppointmentsResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /lead-conversation:
+    get:
+      tags:
+        - lead-conversation
+      summary: Find Lead Conversations
+      operationId: findLeadConversations
+      parameters:
+        - name: operation
+          in: query
+          description: operation
+          required: false
+          schema:
+            type: string
+        - name: search
+          in: query
+          description: search
+          required: false
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: filters
+          required: false
+          schema:
+            type: string
+        - name: first
+          in: query
+          description: number of records returned
+          required: false
+          schema:
+            type: number
+        - name: sortBy
+          in: query
+          description: sort field
+          required: false
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: before token
+          required: false
+          schema:
+            type: string
+        - name: after
+          in: query
+          description: after token
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindLeadConversationsResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /lead-notification:
+    get:
+      tags:
+        - lead-notification
+      summary: Find Lead Notifications
+      operationId: findLeadNotifications
+      parameters:
+        - name: operation
+          in: query
+          description: operation
+          required: false
+          schema:
+            type: string
+        - name: fields
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: search
+          in: query
+          description: search
+          required: false
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: filters
+          required: false
+          schema:
+            type: string
+        - name: first
+          in: query
+          description: number of records returned
+          required: false
+          schema:
+            type: number
+        - name: sortBy
+          in: query
+          description: sort field
+          required: false
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: before token
+          required: false
+          schema:
+            type: string
+        - name: after
+          in: query
+          description: after token
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindLeadNotificationsResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /lead-notification/{leadNotificationId}:
+    patch:
+      tags:
+        - lead-notification
+      summary: Update lead notification
+      operationId: updateLeadNotification
+      parameters:
+        - name: leadNotificationId
+          in: path
+          description: leadNotificationId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateLeadNotificationPayload'
+      responses:
+        200:
+          description: successful operation
+        201:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /lead-attachment:
+    get:
+      tags:
+        - lead-attachment
+      summary: Find Lead Attachment
+      operationId: findLeadAttachments
+      parameters:
+        - name: operation
+          in: query
+          description: operation
+          required: false
+          schema:
+            type: string
+        - name: fields
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: search
+          in: query
+          description: search
+          required: false
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: filters
+          required: false
+          schema:
+            type: string
+        - name: first
+          in: query
+          description: number of records returned
+          required: false
+          schema:
+            type: number
+        - name: sortBy
+          in: query
+          description: sort field
+          required: false
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: before token
+          required: false
+          schema:
+            type: string
+        - name: after
+          in: query
+          description: after token
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindLeadAttachmentsResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    post:
+      tags:
+        - lead-attachment
+      summary: Create lead attachment
+      operationId: createLeadAttachment
+      requestBody:
+        $ref: '#/components/requestBodies/LeadAttachment'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadAttachment'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadAttachment'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /lead-attachment/{leadAttachmentId}:
+    get:
+      tags:
+        - lead-attachment
+      summary: Find lead attachment by id
+      operationId: findLeadAttachmentById
+      parameters:
+        - name: leadAttachmentId
+          in: path
+          description: leadAttachmentId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadAttachment'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /lead-message-detail:
+    get:
+      tags:
+        - lead-message-detail
+      summary: Find Lead Message Details
+      operationId: findLeadMessageDetails
+      parameters:
+        - name: operation
+          in: query
+          description: operation
+          required: false
+          schema:
+            type: string
+        - name: search
+          in: query
+          description: search
+          required: false
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: filters
+          required: false
+          schema:
+            type: string
+        - name: first
+          in: query
+          description: number of records returned
+          required: false
+          schema:
+            type: number
+        - name: sortBy
+          in: query
+          description: sort field
+          required: false
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: before token
+          required: false
+          schema:
+            type: string
+        - name: after
+          in: query
+          description: after token
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindLeadMessageDetailsResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /lead-message-detail/sync-email-message:
+    post:
+      tags:
+        - lead-message-detail
+      summary: sync email message
+      operationId: syncEmailMessage
+      requestBody:
+        $ref: '#/components/requestBodies/CreateSystemConfigPayload'
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /system-config:
+    get:
+      tags:
+        - system-config
+      summary: Find systemconfigs
+      operationId: findSystemConfigs
+      parameters:
+        - name: operation
+          in: query
+          description: operation
+          required: false
+          schema:
+            type: string
+        - name: search
+          in: query
+          description: search
+          required: false
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: filters
+          required: false
+          schema:
+            type: array
+            items:
+              type: object
+        - name: first
+          in: query
+          description: number of records returned
+          required: false
+          schema:
+            type: number
+        - name: sortBy
+          in: query
+          description: sort field
+          required: false
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: before token
+          required: false
+          schema:
+            type: string
+        - name: after
+          in: query
+          description: after token
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindSystemConfigsResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    post:
+      tags:
+        - systemconfigs
+      summary: Create System Configs
+      operationId: createSystemConfig
+      requestBody:
+        $ref: '#/components/requestBodies/CreateSystemConfigPayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemConfig'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemConfig'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /system-config/{systemConfigId}:
+    get:
+      tags:
+        - systemconfigs
+      summary: Find config by id
+      operationId: findSystemConfigById
+      parameters:
+        - name: systemConfigId
+          in: path
+          description: systemconfigId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemConfig'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    patch:
+      tags:
+        - system-config
+      summary: Update system config
+      operationId: updateSystemConfig
+      parameters:
+        - name: systemConfigId
+          in: path
+          description: systemConfigId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateSystemConfigPayload'
+      responses:
+        200:
+          description: successful operation
+        201:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /system-config/lead-stage/:
+    get:
+      tags:
+        - systemconfigs
+      summary: Find all stages
+      operationId: findLeadStages
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindSomeSystemConfigsResult'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /system-config/lead-class-stage/:
+    get:
+      tags:
+        - systemconfigs
+      summary: Find all class stages
+      operationId: findLeadStages
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindSomeSystemConfigsResult'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /system-config/lead-class-stage-status/:
+    get:
+      tags:
+        - systemconfigs
+      summary: Find all class statuses
+      operationId: findLeadStages
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindSomeSystemConfigsResult'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /system-config/prospecting-source/:
+    get:
+      tags:
+        - systemconfigs
+      summary: Find all sources
+      operationId: findProspectingSources
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindSomeSystemConfigsResult'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /system-config/lead-stage-status/{stageId}:
+    get:
+      tags:
+        - systemconfigs
+      summary: Find stage status by stageId
+      operationId: findLeadStageStatusesByStageId
+      parameters:
+        - name: stageId
+          in: path
+          description: stageId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindSomeSystemConfigsResult'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /system-config/lead-stage-status:
+    get:
+      tags:
+        - systemconfigs
+      summary: Find stage status
+      operationId: findLeadStageStatus
+      parameters:
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindSomeSystemConfigsResult'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /system-config/lead-stage-by-name:
+    get:
+      tags:
+        - systemconfigs
+      summary: Find lead stage by name
+      operationId: findLeadStageByName
+      parameters:
+        - name: name
+          in: query
+          description: name
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindOneSystemConfigResult'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /system-config/lead-status-by-name:
+    get:
+      tags:
+        - systemconfigs
+      summary: Find lead status by name
+      operationId: findLeadStatusByName
+      parameters:
+        - name: name
+          in: query
+          description: name
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindOneSystemConfigResult'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /system-config/class-stage-by-name:
+    get:
+      tags:
+        - systemconfigs
+      summary: Find class stage by name
+      operationId: findClassStageByName
+      parameters:
+        - name: name
+          in: query
+          description: name
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindOneSystemConfigResult'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /system-config/class-status-by-name:
+    get:
+      tags:
+        - systemconfigs
+      summary: Find class status by name
+      operationId: findClassStatusByName
+      parameters:
+        - name: name
+          in: query
+          description: name
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindOneSystemConfigResult'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /system-config/contact-stage-by-name:
+    get:
+      tags:
+        - systemconfigs
+      summary: Find contact stage by name
+      operationId: findContactStageByName
+      parameters:
+        - name: name
+          in: query
+          description: name
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindOneSystemConfigResult'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /system-config/contact-status-by-name:
+    get:
+      tags:
+        - systemconfigs
+      summary: Find contact stage by name
+      operationId: findContactStageByName
+      parameters:
+        - name: name
+          in: query
+          description: name
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindOneSystemConfigResult'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /lists/{listId}:
+    get:
+      tags:
+        - lists
+      summary: Find list by id
+      operationId: findListById
+      parameters:
+        - name: listId
+          in: path
+          description: listId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    patch:
+      tags:
+        - lists
+      summary: Update list
+      operationId: updateList
+      parameters:
+        - name: listId
+          in: path
+          description: listId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateListPayload'
+      responses:
+        200:
+          description: successful operation
+        201:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /lists:
+    get:
+      tags:
+        - lists
+      summary: Find lists
+      operationId: findLists
+      parameters:
+        - name: search
+          in: query
+          description: search
+          required: false
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: filters
+          required: false
+          schema:
+            type: array
+            items:
+              type: object
+        - name: first
+          in: query
+          description: number of records returned
+          required: true
+          schema:
+            type: number
+        - name: sortBy
+          in: query
+          description: sort field
+          required: true
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: before token
+          required: false
+          schema:
+            type: string
+        - name: after
+          in: query
+          description: after token
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindListsResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    post:
+      tags:
+        - lists
+      summary: Create list
+      operationId: createList
+      requestBody:
+        $ref: '#/components/requestBodies/CreateListPayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /root-contact/{rootContactId}:
+    get:
+      tags:
+        - root-contact
+      summary: Find root contact by id
+      operationId: findRootContactById
+      parameters:
+        - name: rootContactId
+          in: path
+          description: rootContactId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    patch:
+      tags:
+        - root-contact
+      summary: Update root contact
+      operationId: updateRootContact
+      parameters:
+        - name: rootContactId
+          in: path
+          description: rootContactId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateContactPayload'
+      responses:
+        200:
+          description: successful operation
+        201:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /mapping-contact-info:
+    get:
+      tags:
+        - mapping-contact-info
+      summary: Find mapping
+      operationId: findMapping
+      parameters:
+        - name: key
+          in: query
+          description: key
+          required: false
+          schema:
+            type: string
+        - name: operation
+          in: query
+          description: operation
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MappingContactInfoResult'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /mapping-contact-info/{mappingContactInfoId}:
+    get:
+      tags:
+        - mapping-contact-info
+      summary: Find mapping by id
+      operationId: findMappingById
+      parameters:
+        - name: mappingContactInfoId
+          in: path
+          description: cenmappingContactInfoIdtreId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MappingContactInfo'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /class:
+    get:
+      tags:
+        - class
+      summary: Find class
+      operationId: findClasses
+      parameters:
+        - name: operation
+          in: query
+          description: operation service will take on
+          required: false
+          schema:
+            type: string
+        - name: search
+          in: query
+          description: search
+          required: false
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: filters
+          required: false
+          schema:
+            type: array
+            items:
+              type: object
+        - name: first
+          in: query
+          description: number of records returned
+          required: false
+          schema:
+            type: number
+        - name: sortBy
+          in: query
+          description: sort field
+          required: false
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: before token
+          required: false
+          schema:
+            type: string
+        - name: after
+          in: query
+          description: after token
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindClassesResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    post:
+      tags:
+        - class
+      summary: Create class
+      operationId: createClass
+      requestBody:
+        $ref: '#/components/requestBodies/CreateClassPayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Class'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Class'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /class/get-all-class:
+    get:
+      tags:
+        - class
+      summary: getAllClasses
+      operationId: getAllClasses
+      parameters:
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindAllClassesResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /class/sync:
+    get:
+      tags:
+        - class
+      summary: synchronizeClass
+      operationId: synchronizeClass
+      parameters:
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindAllClassesResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /product-combo/{productComboId}:
+    delete:
+      tags:
+        - product-combo
+      summary: Delete combo
+      operationId: deleteProductCombo
+      parameters:
+        - name: productComboId
+          in: path
+          description: productComboId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+        201:
+          description: successful operation
+        202:
+          description: successful operation
+          content:
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    get:
+      tags:
+        - product-combo
+      summary: Find product combo by id
+      operationId: findProductComboById
+      parameters:
+        - name: productComboId
+          in: path
+          description: productComboId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCombo'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    patch:
+      tags:
+        - product-combo
+      summary: Update Product Combo
+      operationId: updateProductCombo
+      parameters:
+        - name: productComboId
+          in: path
+          description: productComboId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateProductComboPayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCombo'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCombo'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /product-combo:
+    get:
+      tags:
+        - product-combo
+      summary: Find product combo
+      operationId: findProductCombo
+      parameters:
+        - name: operation
+          in: query
+          description: operation service will take on
+          required: false
+          schema:
+            type: string
+        - name: search
+          in: query
+          description: search
+          required: false
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: filters
+          required: false
+          schema:
+            type: array
+            items:
+              type: object
+        - name: first
+          in: query
+          description: number of records returned
+          required: false
+          schema:
+            type: number
+        - name: sortBy
+          in: query
+          description: sort field
+          required: false
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: before token
+          required: false
+          schema:
+            type: string
+        - name: after
+          in: query
+          description: after token
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindProductComboResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    post:
+      tags:
+        - product-combo
+      summary: Create product combo
+      operationId: createProductCombo
+      requestBody:
+        $ref: '#/components/requestBodies/CreateProductComboPayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCombo'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCombo'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /product-combo/get-all-combos:
+    get:
+      tags:
+        - product-combo
+      summary: Get all product combo
+      operationId: getAllProductCombo
+      parameters:
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindAllProductComboResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /product-course/{productCourseId}:
+    get:
+      tags:
+        - product-course
+      summary: Find product course by id
+      operationId: findProductCourseById
+      parameters:
+        - name: productCourseId
+          in: path
+          description: productCourseId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCourse'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    patch:
+      tags:
+        - product-course
+      summary: Update Product Course
+      operationId: updateProductCourse
+      parameters:
+        - name: productCourseId
+          in: path
+          description: productCourseId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateProductCoursePayload'
+      responses:
+        200:
+          description: successful operation
+        201:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /product-course:
+    get:
+      tags:
+        - product-course
+      summary: Find product course
+      operationId: findProductCourse
+      parameters:
+        - name: operation
+          in: query
+          description: operation service will take on
+          required: false
+          schema:
+            type: string
+        - name: search
+          in: query
+          description: search
+          required: false
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: filters
+          required: false
+          schema:
+            type: array
+            items:
+              type: object
+        - name: first
+          in: query
+          description: number of records returned
+          required: false
+          schema:
+            type: number
+        - name: sortBy
+          in: query
+          description: sort field
+          required: false
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: before token
+          required: false
+          schema:
+            type: string
+        - name: after
+          in: query
+          description: after token
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindProductCourseResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    post:
+      tags:
+        - product-course
+      summary: Create product course
+      operationId: createProductCourse
+      requestBody:
+        $ref: '#/components/requestBodies/CreateProductCoursePayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCourse'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCourse'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /product-course/get-all-courses:
+    get:
+      tags:
+        - product-course
+      summary: Find all product course
+      operationId: getAllProductCourse
+      parameters:
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindAllProductCourseResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /product-course/sync:
+    get:
+      tags:
+        - product-course
+      summary: synchronizeCourse
+      operationId: synchronizeCourse
+      parameters:
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindAllProductCourseResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /lead-product-order/{leadProductOrderId}:
+    get:
+      tags:
+        - lead-product-order
+      summary: Find lead product order by id
+      operationId: findLeadProductOrderById
+      parameters:
+        - name: leadProductOrderId
+          in: path
+          description: leadProductOrderId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadProductOrder'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    patch:
+      tags:
+        - lead-product-order
+      summary: Update Lead Product Order
+      operationId: updateLeadProductOrder
+      parameters:
+        - name: leadProductOrderId
+          in: path
+          description: leadProductOrderId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateLeadProductOrderPayload'
+      responses:
+        200:
+          description: successful operation
+        201:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /lead-product-order:
+    get:
+      tags:
+        - lead-product-order
+      summary: Find Lead Product Order
+      operationId: findLeadProductOrder
+      parameters:
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindLeadProductOrderResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    post:
+      tags:
+        - lead-product-order
+      summary: Create Lead Product Order
+      operationId: createLeadProductOrder
+      requestBody:
+        $ref: '#/components/requestBodies/CreateLeadProductOrderPayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadProductOrder'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadProductOrder'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+components:
+  schemas:
+    CheckFilterNameResult:
+      type: object
+      properties:
+        existedFilterName:
+          type: boolean
+    CreateLeadFilterPayload:
+      type: object
+      properties:
+        name:
+          type: string
+        search:
+          type: string
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeadFilterItem'
+    LeadFilterItem:
+      type: object
+      properties:
+        fieldName:
+          type: string
+        operator:
+          type: string
+        value:
+          type: any
+    LeadFilter:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        owner:
+          type: any
+        search:
+          type: string
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeadFilterItem'
+        createdAt:
+          type: number
+    FindLeadFiltersResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeadFilter'
+        before:
+          type: string
+        after:
+          type: string
+    FindListsResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/List'
+        before:
+          type: string
+        after:
+          type: string
+    UpdateListPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          example: update
+          enum: [updateDetail]
+        payload:
+          type: object
+          properties:
+            name:
+              type: string
+              example: admin
+            description:
+              type: string
+              example: admin who can view, create, edit, delete
+    List:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        name:
+          type: string
+          example: admin
+        description:
+          type: string
+          example: admin who can view, create, edit, delete
+        isActive:
+          type: boolean;
+          example: true
+    CreateListPayload:
+      type: object
+      properties:
+        name:
+          type: string
+          example: admin
+        description:
+          type: string
+          example: admin
+    SystemConfig:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        option:
+          type: string
+          example: LEAD_STAGE
+        description:
+          type: string
+          example: value for config
+        value:
+          type: string;
+          example: '{name: Contacted, shortName: Contacted, order: 1}'
+    FindSomeSystemConfigsResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/SystemConfig'
+    FindOneSystemConfigResult:
+      type: object
+      properties:
+        data:
+          type: object
+          $ref: '#/components/schemas/SystemConfig'
+    FindSystemConfigsResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/SystemConfig'
+        before:
+          type: string
+        after:
+          type: string
+    UpdateSystemConfigPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          example: update
+          enum: [updateDetail]
+        payload:
+          type: object
+          $ref: '#/components/schemas/SystemConfig'
+    CreateSystemConfigPayload:
+      type: object
+      properties:
+        option:
+          type: string
+          example: LEAD_STAGE
+        value:
+          type: string
+          example: '{name: Contacted, shortName: Contacted, order: 1}'
+    FindCampaignsResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Campaign'
+        before:
+          type: string
+        after:
+          type: string
+    Campaign:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        sourceId:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        name:
+          type: string
+          example: hackathon
+        order:
+          type: number
+          example: 1
+    UpdateCampaignPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          example: update
+          enum: [updateDetail]
+        payload:
+          type: object
+          $ref: '#/components/schemas/Campaign'
+    CreateCampaignPayload:
+      type: object
+      properties:
+        sourceId:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        name:
+          type: string
+          example: hackathon
+        order:
+          type: number
+          example: 1
+    LeadTask:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        leadId:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        assigneeId:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        title:
+          type: string
+          example: contact
+        dueAt:
+          type: number
+        status:
+          type: number
+          example: 1
+        finishedAt:
+          oneOf:
+            - type: number
+            - type: undefined
+    UpdateLeadTaskPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          example: update
+          enum: [updateDetail]
+        payload:
+          type: object
+          $ref: '#/components/schemas/LeadTask'
+    CreateLeadTaskPayload:
+      type: object
+      properties:
+        leadId:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        assigneeId:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        title:
+          type: string
+          example: contact
+        dueAt:
+          type: number
+        status:
+          type: number
+          example: 1
+        finishAt:
+          type: number
+    FindAllLeadTasksResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeadTask'
+    ProspectingList:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        name:
+          type: string
+        source:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        entries:
+          type: object
+        sourceName:
+          type: string
+        assigneeId:
+          type: string
+        autoAddProductOrder:
+          type: boolean
+        comboId:
+          type: string
+        comboName:
+          type: string
+        courses:
+          type: array
+        createdAt:
+          type: number
+    UpdateProspectingListPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          example: update
+          enum: [updateDetail]
+        payload:
+          type: object
+          $ref: '#/components/schemas/ProspectingList'
+    CreateProspectingListPayload:
+      type: object
+      properties:
+        name:
+          type: string
+        source:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        entries:
+          type: object
+        sourceName:
+          type: string
+        assigneeId:
+          type: string
+        autoAddProductOrder:
+          type: boolean
+        comboId:
+          type: string
+        comboName:
+          type: string
+        courses:
+          type: array
+    FindAllProspectingListsResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProspectingList'
+        before:
+          type: string
+        after:
+          type: string
+    MappingContactInfo:
+      type: object
+      properties:
+        key:
+          type: string
+        refId:
+          type: string
+    MappingContactInfoResult:
+      type: array
+      items:
+        $ref: '#/components/schemas/MappingContactInfo'
+    UpdateLeadAppointmentPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          example: update
+          enum: [updateDetail]
+        payload:
+          type: object
+          $ref: '#/components/schemas/LeadAppointment'
+    CreateLeadAppointmentPayload:
+      type: object
+      properties:
+        leadId:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        assigneeId:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        title:
+          type: string
+          example: contact
+        dueAt:
+          type: number
+        status:
+          type: number
+          example: 1
+        finishAt:
+          type: number
+    FindAllLeadAppointmentsResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeadAppointment'
+        before:
+          type: string
+        after:
+          type: string
+    EmailTemplate:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        name:
+          type: string
+          example: contact
+        text:
+          type: string
+    EmailTemplateConfig:
+      type: object
+      properties:
+        _id:
+          type: string
+        id:
+          type: string
+        eventName:
+          type: string
+        template:
+          type: string
+    FindEmailTemplatesResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmailTemplate'
+        before:
+          type: string
+        after:
+          type: string
+    FindEmailTemplateConfigsResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmailTemplateConfig'
+        before:
+          type: string
+        after:
+          type: string
+    FindEmailTemplateConfigByNameResult:
+      type: object
+      properties:
+        data:
+          type: object
+          $ref: '#/components/schemas/EmailTemplateConfig'
+    UpdateEmailTemplatePayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          example: update
+          enum: [updateDetail]
+        payload:
+          type: object
+          $ref: '#/components/schemas/EmailTemplate'
+    UpdateEmailTemplateConfigPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          example: update
+          enum: [updateDetail]
+        payload:
+          type: object
+          $ref: '#/components/schemas/EmailTemplateConfig'
+    CreateEmailTemplatePayload:
+      type: object
+      properties:
+        name:
+          type: string
+          example: contact
+        payload:
+          type: object
+          $ref: '#/components/schemas/EmailTemplate'
+    CreateEmailTemplateConfigPayload:
+      type: object
+      properties:
+        eventName:
+          type: string
+        template:
+          type: string
+    DefaultTask:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        name:
+          type: string
+          example: contact
+        schedule:
+          type: string
+          example: 2-1-0 2days 1hours 0 minutes
+    FindDefaultTasksResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DefaultTask'
+        before:
+          type: string
+        after:
+          type: string
+    UpdateDefaultTaskPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          example: update
+          enum: [updateDetail]
+        payload:
+          type: object
+          $ref: '#/components/schemas/DefaultTask'
+    CreateDefaultTaskPayload:
+      type: object
+      properties:
+        name:
+          type: string
+          example: contact
+        schedule:
+          type: string
+          example: 2-2-2
+    LeadConversation:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        leadId:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        messageCount:
+          type: number
+          example: 1
+        contactId:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        ownerId:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        channel:
+          type: number
+          example: 1
+        fbChatId:
+          type: string
+        fbChatLink:
+          type: string
+    LeadPaymentTransaction:
+      type: object
+      properties:
+        _id:
+          type: string
+        leadId:
+          type: string
+        paymentType:
+          type: string
+        amount:
+          type: number
+        note:
+          type: string
+    FindLeadPaymentTransaction:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeadPaymentTransaction'
+    CreateLeadPaymentTransaction:
+      type: object
+      properties:
+        leadId:
+          type: string
+        paymentType:
+          type: string
+        amount:
+          type: number
+        note:
+          type: string
+    UpdateLeadPaymentTransaction:
+      type: object
+      properties:
+        _id:
+          type: string
+        paymentType:
+          type: string
+        amount:
+          type: number
+        note:
+          type: string
+    LeadNote:
+      type: object
+      properties:
+        _id:
+          type: string
+        leadId:
+          type: string
+        content:
+          type: string
+        createdAt:
+          type: number
+        createdBy:
+          $ref: '#/components/schemas/User'
+    FindLeadNote:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeadNote'
+    CreateLeadNote:
+      type: object
+      properties:
+        leadId:
+          type: string
+        content:
+          type: string
+    UpdateLeadNote:
+      type: object
+      properties:
+        _id:
+          type: string
+        content:
+          type: string
+    FindLeadConversationsResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeadConversation'
+        before:
+          type: string
+        after:
+          type: string
+    LeadNotification:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        leadId:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        contactId:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        type:
+          type: number
+          example: 1
+        content:
+          type: string
+        isSeen:
+          type: boolean
+        isChecked:
+          type: boolean
+        objectId:
+          type: string
+        objectType:
+          type: string
+        createdAt:
+          type: number
+        createdBy:
+          type: string
+    FindLeadNotificationsResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeadNotification'
+        before:
+          type: string
+        after:
+          type: string
+    UpdateLeadNotificationPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          example: update
+          enum: [updateDetail]
+        payload:
+          type: object
+          $ref: '#/components/schemas/LeadNotification'
+    LeadAttachment:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        leadId:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        type:
+          type: number
+          example: 1
+        title:
+          type: string
+        url:
+          type: number
+        otherUrl:
+          type: string
+        createdBy:
+          type: string
+    CreateLeadAttachmentPayload:
+      type: object
+      properties:
+        leadId:
+          type: string
+        otherLink:
+          type: number
+        createdAt:
+          type: number
+    FindLeadAttachmentsResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeadAttachment'
+        before:
+          type: string
+        after:
+          type: string
+    LeadMessageDetail:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        conversationId:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        direction:
+          type: number
+          example: 1
+        content:
+          type: string
+        html:
+          type: string
+        createdAt:
+          type: number
+        createdBy:
+          type: string
+        channel:
+          type: any
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeadAttachment'
+    SyncEmailMessage:
+      type: object
+      properties:
+        leadId:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+    FindLeadMessageDetailsResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeadMessageDetail'
+        before:
+          type: string
+        after:
+          type: string
+    FindClassesResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Class'
+        before:
+          type: string
+        after:
+          type: string
+    FindAllClassesResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Class'
+    UpdateClassPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          example: update
+          enum: [updateDetail]
+        payload:
+          type: object
+          $ref: '#/components/schemas/Class'
+    Class:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        name:
+          type: string
+          example: admin
+        description:
+          type: string
+          example: admin who can view, create, edit, delete
+        isActive:
+          type: boolean
+          example: true
+        startDate:
+          type: string
+        endDate:
+          type: string
+        centreId:
+          type: string
+    CreateClassPayload:
+      type: object
+      properties:
+        name:
+          type: string
+          example: admin
+        description:
+          type: string
+          example: admin
+        startDate:
+          type: string
+        endDate:
+          type: string
+    ProductCombo:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        field:
+          type: string
+        condition:
+          type: string
+        conditionValue:
+          type: number
+        discountType:
+          type: string
+        discountValue:
+          type: number
+    FindProductComboResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductCombo'
+        before:
+          type: string
+        after:
+          type: string
+    FindAllProductComboResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductCombo'
+    CreateProductComboPayload:
+      type: object
+      properties:
+        name:
+          type: string
+        field:
+          type: string
+        condition:
+          type: string
+        discountType:
+          type: string
+        discountValue:
+          type: number
+    UpdateProductComboPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          example: update
+          enum: [updateDetail]
+        payload:
+          type: object
+          properties:
+            _id:
+              type: string
+            name:
+              type: string
+            field:
+              type: string
+            condition:
+              type: string
+            discountType:
+              type: string
+            discountValue:
+              type: number
+    ProductCourse:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        shortName:
+          type: string
+        order:
+          type: number
+        tuitionBeforeDiscount:
+          type: number
+        isAvailableInCombo:
+          type: boolean
+    FindProductCourseResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductCourse'
+        total:
+          type: number
+    FindAllProductCourseResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductCourse'
+    CreateProductCoursePayload:
+      type: object
+      properties:
+        name:
+          type: string
+        shortName:
+          type: string
+        order:
+          type: number
+        tuitionBeforeDiscount:
+          type: number
+        isAvailableInCombo:
+          type: boolean
+    UpdateProductCoursePayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          example: update
+          enum: [updateDetail]
+        payload:
+          type: object
+          properties:
+            _id:
+              type: string
+            name:
+              type: string
+            shortName:
+              type: string
+            order:
+              type: number
+            tuitionBeforeDiscount:
+              type: number
+            isAvailableInCombo:
+              type: boolean
+    LeadProductOrder:
+      type: object
+      properties:
+        _id:
+          type: string
+        leadId:
+          type: string
+        comboId:
+          type: string
+        comboName:
+          type: string
+        courses:
+          type: array
+          items:
+            type: object
+            properties:
+              _id:
+                type: string
+              name:
+                type: string
+              shortName:
+                type: string
+              tuitionBeforeDiscount:
+                type: number
+              discountType:
+                type: string
+              discountValue:
+                type: number
+              stage:
+                type: string
+              status:
+                type: string
+              class:
+                type: string
+    FindLeadProductOrderResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeadProductOrder'
+        total:
+          type: number
+    CreateLeadProductOrderPayload:
+      type: object
+      properties:
+        leadId:
+          type: string
+        comboId:
+          type: string
+        comboName:
+          type: string
+        courses:
+          type: array
+          items:
+            type: object
+            properties:
+              _id:
+                type: string
+              name:
+                type: string
+              shortName:
+                type: string
+              tuitionBeforeDiscount:
+                type: number
+              discountType:
+                type: string
+              discountValue:
+                type: number
+              stage:
+                type: string
+              status:
+                type: string
+              class:
+                type: string
+    UpdateLeadProductOrderPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          example: update
+          enum: [updateDetail]
+        payload:
+          type: object
+          properties:
+            _id:
+              type: string
+            leadId:
+              type: string
+            comboId:
+              type: string
+            comboName:
+              type: string
+            courses:
+              type: array
+              items:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  name:
+                    type: string
+                  shortName:
+                    type: string
+                  tuitionBeforeDiscount:
+                    type: number
+                  discountType:
+                    type: string
+                  discountValue:
+                    type: number
+                  stage:
+                    type: string
+                  status:
+                    type: string
+                  class:
+                    type: string
+    UpdateRootContactPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+        payload:
+          type: object
+          properties:
+            lmsStudentId:
+              type: string
+  requestBodies:
+    CreateLeadFilterPayload:
+      description: Create lead filter payload
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateLeadFilterPayload'
+    SyncEmailMessage:
+      description: Update campaign params
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SyncEmailMessage'
+    UpdateCampaignPayload:
+      description: Update campaign params
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/UpdateCampaignPayload'
+    CreateCampaignPayload:
+      description: Create campaign params
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateCampaignPayload'
+    CreateLeadPaymentTransaction:
+      description: Create Lead Payment Transaction params
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/CreateLeadPaymentTransaction'
+    UpdateLeadPaymentTransaction:
+      description: Update Lead Payment Transaction params
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/UpdateLeadPaymentTransaction'
+    CreateLeadNote:
+      description: Create Lead Note params
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/CreateLeadNote'
+    UpdateLeadNote:
+      description: Update Lead Note params
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/UpdateLeadNote'
+    UpdateSystemConfigPayload:
+      description: Update default task params
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/UpdateSystemConfigPayload'
+    CreateSystemConfigPayload:
+      description: Create default task params
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateSystemConfigPayload'
+    UpdateDefaultTaskPayload:
+      description: Update default task params
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/UpdateDefaultTaskPayload'
+    CreateDefaultTaskPayload:
+      description: Create default task params
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateDefaultTaskPayload'
+    CreateLeadAttachmentPayload:
+      description: Create lead attachment params
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateLeadAttachmentPayload'
+    UpdateListPayload:
+      description: Update list params
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/UpdateListPayload'
+    CreateListPayload:
+      description: Create list params
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateListPayload'
+    UpdateClassPayload:
+      description: Update class params
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/UpdateClassPayload'
+    CreateClassPayload:
+      description: Create class params
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateClassPayload'
+    UpdateProductComboPayload:
+      description: Update product combo params
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/UpdateProductComboPayload'
+    CreateProductComboPayload:
+      description: Create product combo params
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/CreateProductComboPayload'
+    UpdateProductCoursePayload:
+      description: Update product course params
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/UpdateProductCoursePayload'
+    CreateProductCoursePayload:
+      description: Create product course params
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/CreateProductCoursePayload'
+    UpdateLeadProductOrderPayload:
+      description: Update lead product order params
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/UpdateLeadProductOrderPayload'
+    CreateLeadProductOrderPayload:
+      description: Create lead product order params
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/CreateLeadProductOrderPayload'
+    CreateEmailTemplateConfigPayload:
+      description: Create Email template config payload
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/CreateEmailTemplateConfigPayload'
+    UpdateEmailTemplateConfigPayload:
+      description: Update Email template config payload
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/UpdateEmailTemplateConfigPayload'
+    UpdateRootContactPayload:
+      description: Update Root Contact payload
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/UpdateRootContactPayload'
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

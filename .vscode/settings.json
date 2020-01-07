@@ -1,0 +1,17 @@
+{
+  "files.autoSave": "off",
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "editor.insertSpaces": true,
+  "files.autoSaveDelay": 1,
+  "typescript.preferences.importModuleSpecifier": "auto",
+  "typescript.suggest.autoImports": true,
+  "cSpell.words": [
+    "Auditable",
+    "Deletable",
+    "antd",
+    "feathersjs",
+    "formik",
+    "sider"
+  ]
+}

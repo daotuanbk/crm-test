@@ -1,0 +1,49 @@
+openapi: 3.0.0
+
+tags:
+  - name: LMS Categories
+    description: Categories from LMS
+
+paths:
+  /lms-categories:
+    get:
+      tags:
+        - lmscategory
+      summary: Find Lms categories
+      operationId: findLmsCategories
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindLmsCategoryResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+
+components:
+  schemas:
+    FindLmsCategoryResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/LmsCategory'
+        count:
+          type: number
+    LmsCategory:
+      type: object
+      properties:
+        _id:
+          type: string
+        title:
+          type: string
+        descripttion:
+          type: string

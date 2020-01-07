@@ -1,0 +1,14 @@
+{
+  "internalServerError": "Internal Server Error",
+  "missingId": "Params Id is missing",
+  "invalidEmail": "Invalid email address",
+  "emailRequired": "Email is required",
+  "invalidPasswordRegex": "Password must be minimum 6 characters, at least 1 letter, one number and one special character",
+  "passwordRequired": "Password is required",
+  "familyNameRequired": "Family name is required",
+  "tooShort": "Too short",
+  "tooLong": "Too long",
+  "givenNameRequired": "Given name is required",
+  "emailExist": "Email has been used",
+  "test": "This is user module"
+}

@@ -1,0 +1,353 @@
+openapi: 3.0.0
+tags:
+  - name: contact
+    description: Admin operations about contact
+paths:
+  /contact/customs/check-phone-number-exists/{phoneNumber}:
+    get:
+      tags:
+        - contact
+      summary: checkContactExistsByPhoneNumber
+      operationId: checkContactExistsByPhoneNumber
+      parameters:
+        - name: phoneNumber
+          in: path
+          description: phoneNumber
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        201:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /contact/customs/summary:
+    get:
+      tags:
+        - contact
+      summary: getSummary
+      operationId: getSummary
+      parameters:
+        - name: listId
+          in: query
+          description: listId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactSummary'
+        201:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /contact/{contactId}:
+    get:
+      tags:
+        - contact
+      summary: findContactById
+      operationId: findContactById
+      parameters:
+        - name: contactId
+          in: path
+          description: contactId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        201:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    patch:
+      tags:
+        - contact
+      summary: Update contact
+      operationId: updateContact
+      parameters:
+        - name: contactId
+          in: path
+          description: contactId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/UpdateContactDetailPayload'
+                - $ref: '#/components/schemas/AddContactFamilyMemberPayload'
+      responses:
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /contact:
+    get:
+      tags:
+        - contact
+      summary: Find contacts
+      operationId: findContacts
+      parameters:
+        - name: search
+          in: query
+          description: search
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: number of records returned
+          required: false
+          schema:
+            type: number
+            default: 20
+        - name: page
+          in: query
+          description: current page
+          required: false
+          schema:
+            type: number
+            default: 1
+        - name: sortBy
+          in: query
+          description: sort field
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindContactsResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    post:
+      tags:
+        - contact
+      summary: Create contact
+      operationId: createContact
+      requestBody:
+        $ref: '#/components/requestBodies/CreateContactPayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+components:
+  schemas:
+    AddContactFamilyMemberPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          enum: [addFamilyMember]
+        payload:
+          type: object
+          properties:
+            contactId:
+              type: string
+            contactInfo:
+              type: object
+              properties:
+                fullName:
+                  type: string
+                phoneNumber:
+                  type: string
+                gender:
+                  type: string
+                  enum: [MALE, FEMALE, OTHER]
+                email:
+                  type: string
+                address:
+                  type: string
+                dob:
+                  type: string
+                facebook:
+                  type: string
+                zalo:
+                  type: string
+                school:
+                  type: string
+            relation:
+              type: string
+              enum: [SON, DAUGHTER, GRAND_SON, GRAND_DAUGHTER, NEPHEW, OTHER]
+    UpdateContactDetailPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          enum: [updateDetail]
+        payload:
+          type: object
+          properties:
+            fullName:
+              type: string
+            gender:
+              type: string
+              enum: [MALE, FEMALE, OTHER]
+            email:
+              type: string
+            address:
+              type: string
+            dob:
+              type: string
+            facebook:
+              type: string
+            zalo:
+              type: string
+            school:
+              type: string
+    FindContactsResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
+        count:
+          type: number
+    CreateContactPayload:
+      type: object
+      properties:
+        contactBasicInfo:
+          type: object
+          properties:
+            fullName:
+              type: string
+            phoneNumber:
+              type: string
+            gender:
+              type: string
+              enum: [MALE, FEMALE, OTHER]
+            email:
+              type: string
+            address:
+              type: string
+            dob:
+              type: string
+            facebook:
+              type: string
+            zalo:
+              type: string
+            school:
+              type: string
+    FamilyMember:
+      type: object
+      properties:
+        _id:
+          type: string
+        fullName:
+          type: string
+        phoneNumber:
+          type: string
+        email:
+          type: string
+        relation:
+          type: string
+          enum: [SON, DAUGHTER, GRAND_SON, GRAND_DAUGHTER, NEPHEW, OTHER]
+    Contact:
+      type: object
+      properties:
+        _id:
+          type: string
+        fullName:
+          type: string
+        phoneNumber:
+          type: string
+        gender:
+          type: string
+          enum: [MALE, FEMALE, OTHER]
+        email:
+          type: string
+        address:
+          type: string
+        dob:
+          type: string
+        facebook:
+          type: string
+        zalo:
+          type: string
+        school:
+          type: string
+        family:
+          type: array
+          items:
+            $ref: '#/components/schemas/FamilyMember'
+    ContactSummary:
+      type: object
+      properties:
+        total:
+          type: number
+        active:
+          type: number

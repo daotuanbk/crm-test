@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"techkids-edu-crm.productcourses"},{"v":2,"key":{"_fts":"text","_ftsx":1},"name":"coreIndex","default_language":"english","ns":"techkids-edu-crm.productcourses","background":true,"language_override":"language","weights":{"name":1,"shortName":1},"textIndexVersion":3}],"uuid":"143ac70634874b78bc30af43beaac6af"}

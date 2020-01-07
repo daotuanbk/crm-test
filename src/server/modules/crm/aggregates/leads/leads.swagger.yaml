@@ -1,0 +1,1648 @@
+openapi: 3.0.0
+tags:
+  - name: leads
+    description: Admin operations about leads
+paths:
+  /leads/get-active-lead-by-phone-number/{phoneNumber}:
+    get:
+      tags:
+        - leads
+      summary: Find active lead by phone number
+      operationId: findActiveLeadByPhoneNumber
+      parameters:
+        - name: phoneNumber
+          in: path
+          description: phoneNumber
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /leads/{leadId}:
+    get:
+      tags:
+        - leads
+      summary: Find lead by id
+      operationId: findLeadById
+      parameters:
+        - name: leadId
+          in: path
+          description: leadId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    patch:
+      tags:
+        - leads
+      summary: Update lead
+      operationId: updateLead
+      parameters:
+        - name: leadId
+          in: path
+          description: leadId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateLeadPayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatchResponse'
+        201:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /leads/{leadId}/reminders:
+    post:
+      tags:
+        - leads
+      summary: Create lead reminder
+      operationId: createLeadReminder
+      parameters:
+        - name: leadId
+          in: path
+          description: leadId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/LeadReminderPayload'
+      responses:
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /leads/{leadId}/reminders/{reminderId}:
+    patch:
+      tags:
+        - leads
+      summary: Update lead reminder
+      operationId: updateLeadReminder
+      parameters:
+        - name: leadId
+          in: path
+          description: leadId
+          required: true
+          schema:
+            type: string
+        - name: reminderId
+          in: path
+          description: reminderId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/LeadReminderUpdatePayload'
+      responses:
+        201:
+          description: successful operation
+        400:
+          description: Bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: Internal server error
+      security:
+        - Bearer: []
+  /leads/{leadId}/notes:
+    post:
+      tags:
+        - leads
+      summary: Create lead note
+      operationId: addLeadNote
+      parameters:
+        - name: leadId
+          in: path
+          description: leadId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/LeadNotePayload'
+      responses:
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadNote'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /leads/{leadId}/appointments:
+    post:
+      tags:
+        - leads
+      summary: Create lead appointment
+      operationId: addLeadAppointment
+      parameters:
+        - name: leadId
+          in: path
+          description: leadId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/LeadAppointmentPayload'
+      responses:
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /leads/{leadId}/appointments/{appointmentId}:
+    patch:
+      tags:
+        - leads
+      summary: Update lead appointment
+      operationId: updateLeadAppointmentStatus
+      parameters:
+        - name: leadId
+          in: path
+          description: leadId
+          required: true
+          schema:
+            type: string
+        - name: appointmentId
+          in: path
+          description: appointmentId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/LeadAppointmentPayload'
+      responses:
+        201:
+          description: successful operation
+        400:
+          description: Bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: Internal server error
+      security:
+        - Bearer: []
+  /leads/{leadId}/family:
+    post:
+      tags:
+        - leads
+      summary: Create lead family member
+      operationId: addLeadFamilyMember
+      parameters:
+        - name: leadId
+          in: path
+          description: leadId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/schemas/AddContactFamilyMemberPayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /leads/{leadId}/family/{familyMemberId}:
+    patch:
+      tags:
+        - leads
+      summary: Update lead family member
+      operationId: updateLeadFamilyMember
+      parameters:
+        - name: leadId
+          in: path
+          description: leadId
+          required: true
+          schema:
+            type: string
+        - name: familyMemberId
+          in: path
+          description: familyMemberId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/schemas/UpdateLeadFamilyMemberPayload'
+      responses:
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        400:
+          description: Bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: Internal server error
+      security:
+        - Bearer: []
+  /leads/{leadId}/customer:
+    patch:
+      tags:
+        - leads
+      summary: Update lead customer
+      operationId: updateLeadCustomer
+      parameters:
+        - name: leadId
+          in: path
+          description: leadId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/schemas/UpdateLeadCustomerPayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        400:
+          description: Bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: Internal server error
+      security:
+        - Bearer: []
+  /leads/{leadId}/order:
+    post:
+      tags:
+        - leads
+      summary: Create lead order
+      operationId: createLeadOrder
+      parameters:
+        - name: leadId
+          in: path
+          description: leadId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateLeadOrderPayload"
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        400:
+          description: Bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: Internal server error
+      security:
+        - Bearer: []
+  /leads/{leadId}/payment:
+    post:
+      tags:
+        - leads
+      summary: Add lead payment
+      operationId: addLeadPayment
+      parameters:
+        - name: leadId
+          in: path
+          description: leadId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LeadPaymentItem"
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        400:
+          description: Bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: Internal server error
+      security:
+        - Bearer: []
+  /leads/{leadId}/refund:
+    post:
+      tags:
+        - leads
+      summary: Add lead refund
+      operationId: addLeadRefund
+      parameters:
+        - name: leadId
+          in: path
+          description: leadId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LeadRefundItem"
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        400:
+          description: Bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: Internal server error
+      security:
+        - Bearer: []      
+  /leads/{leadId}/products:
+    patch:
+      tags:
+        - leads
+      summary: Update lead product
+      operationId: updateLeadProducts
+      parameters:
+        - name: leadId
+          in: path
+          description: leadId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateLeadProductsPayload"
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        400:
+          description: Bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: Internal server error
+      security:
+        - Bearer: []
+  /leads/{leadId}/order/{productItemId}/enrollments:
+    post:
+      tags:
+        - leads
+      summary: Add product enrollment imte 
+      operationId: addProductEnrollmentItem
+      parameters:
+        - name: leadId
+          in: path
+          description: leadId
+          required: true
+          schema:
+            type: string
+        - name: productItemId
+          in: path
+          description: productItemId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProductEnrollmentItemPayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        400:
+          description: Bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: Internal server error
+      security:
+        - Bearer: []
+  
+  /leads/{leadId}/order/productItems:
+    post:
+      tags:
+        - leads
+      summary: Add order product item
+      operationId: addOrderProductItem
+      parameters:
+        - name: leadId
+          in: path
+          description: leadId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeadOrderProductItemPayload'
+
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        400:
+          description: Bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: Internal server error
+      security:
+        - Bearer: []
+  /leads/{leadId}/order/productItems/{productItemId}:
+    delete:
+      tags:
+        - leads
+      summary: Delete order product item
+      operationId: deleteOrderProductItem
+      parameters:
+        - name: leadId
+          in: path
+          description: leadId
+          required: true
+          schema:
+            type: string
+        - name: productItemId
+          in: path
+          description: productItemId
+          required: true
+          schema:
+            type: string
+
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        400:
+          description: Bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: Internal server error
+      security:
+        - Bearer: []
+    patch:
+      tags:
+        - leads
+      summary: Update order product item
+      operationId: updateOrderProductItem
+      parameters:
+        - name: leadId
+          in: path
+          description: leadId
+          required: true
+          schema:
+            type: string
+        - name: productItemId
+          in: path
+          description: productItemId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeadOrderProductItemPayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        400:
+          description: Bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: Internal server error
+      security:
+        - Bearer: []
+  /leads/{leadId}/order/{productItemId}/enrollments/{productEnrollmentItemId}:
+    patch:
+      tags:
+        - leads
+      summary: Update product enrollment item
+      operationId: updateProductEnrollmentItem
+      parameters:
+        - name: leadId
+          in: path
+          description: leadId
+          required: true
+          schema:
+            type: string
+        - name: productItemId
+          in: path
+          description: productItemId
+          required: true
+          schema:
+            type: string
+        - name: productEnrollmentItemId
+          in: path
+          description: productEnrollmentItemId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProductEnrollmentItemPayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        400:
+          description: Bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: Internal server error
+      security:
+        - Bearer: []
+    post:
+      tags:
+        - leads
+      summary: Send enrollment request
+      operationId: sendEnrollmentRequest
+      parameters:
+        - name: leadId
+          in: path
+          description: leadId
+          required: true
+          schema:
+            type: string
+        - name: productItemId
+          in: path
+          description: productItemId
+          required: true
+          schema:
+            type: string
+        - name: productEnrollmentItemId
+          in: path
+          description: productEnrollmentItemId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        400:
+          description: Bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: Internal server error
+      security:
+        - Bearer: []
+    delete:
+      tags:
+        - leads
+      summary: Cancel enrollment request
+      operationId: cancelEnrollmentRequest
+      parameters:
+        - name: leadId
+          in: path
+          description: leadId
+          required: true
+          schema:
+            type: string
+        - name: productItemId
+          in: path
+          description: productItemId
+          required: true
+          schema:
+            type: string
+        - name: productEnrollmentItemId
+          in: path
+          description: productEnrollmentItemId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        400:
+          description: Bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: Internal server error
+      security:
+        - Bearer: []
+  /leads:
+    get:
+      tags:
+        - leads
+      summary: Find leads
+      operationId: findLeads
+      parameters:
+        - name: operation
+          in: query
+          description: operation
+          required: false
+          schema:
+            type: string
+        - name: search
+          in: query
+          description: search
+          required: false
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: filters
+          required: false
+          schema:
+            type: array
+            items:
+              type: object
+        - name: limit
+          in: query
+          description: number of records returned
+          required: false
+          schema:
+            type: number
+            default: 20
+        - name: page
+          in: query
+          description: current page
+          required: false
+          schema:
+            type: number
+            default: 1
+        - name: sortBy
+          in: query
+          description: sort field
+          required: false
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: before token
+          required: false
+          schema:
+            type: string
+        - name: after
+          in: query
+          description: after token
+          required: false
+          schema:
+            type: string
+        - name: stage
+          in: query
+          description: Specified sale stage
+          required: false
+          type: array
+          collectionFormat: multi
+          schema:
+            type: array
+            collectionFormat: multi
+            items:
+              type: string
+        - name: channel
+          in: query
+          description: Specified channel
+          required: false
+          schema:
+            type: array
+            collectionFormat: multi
+            items:
+              type: string
+        - name: status
+          in: query
+          description: Specified sale status
+          required: false
+          schema:
+            type: array
+            collectionFormat: multi
+            items:
+              type: string
+        - name: reminderStart
+          in: query
+          description: Reminder filter starting date range, in ISO8061 string
+          required: false
+          schema:
+            type: string
+        - name: reminderEnd
+          in: query
+          description: Reminder filter ending date range, in ISO8061 string
+          required: false
+          schema:
+            type: string
+        - name: tuitionPaidPercent
+          in: query
+          description: Tuition range
+          required: false
+          schema:
+            type: string
+            enum: ['0', '0:100', '100']
+            default: '0:100'
+        - name: appointmentStart
+          in: query
+          description: Appointment filter starting date range, in ISO8061 string
+          required: false
+          schema:
+            type: string
+        - name: appointmentEnd
+          in: query
+          description: Appointment filter ending date range, in ISO8061 string
+          required: false
+          schema:
+            type: string
+        - name: product
+          in: query
+          description: Product purchased
+          required: false
+          schema:
+            type: string
+        - name: createdAtStart
+          in: query
+          description: Created at filter starting date range, in ISO8061 string
+          required: false
+          schema:
+            type: string
+        - name: createdAtEnd
+          in: query
+          description: Created at filter ending date range, in ISO8061 string
+          required: false
+          schema:
+            type: string
+        - name: owner
+          in: query
+          description: owner's id, set to 'no-owner' in case of searching for unowned leads
+          required: false
+          schema:
+            type: string
+        - name: centreId
+          in: query
+          description: centre's id, set to 'no-owner' in case of searching for leads not belong to any centres
+          required: false
+          schema:
+            type: string
+        - name: lmsCourse
+          in: query
+          description: Course's id
+          required: false
+          schema:
+            type: string
+        - name: lmsClass
+          in: query
+          description: Class's id
+          required: false
+          schema:
+            type: string
+        - name: lmsEnrollmentStatus
+          in: query
+          description: LMS enrollment status
+          required: false
+          schema:
+            type: string
+            enum: ["Not Enrolled", Waiting, Approved, Rejected]
+
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    post:
+      tags:
+        - leads
+      summary: Create lead
+      operationId: createLead
+      requestBody:
+        $ref: '#/components/requestBodies/CreateLeadPayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+components:
+  schemas:
+    ProductEnrollmentItem:
+      type: object
+      properties:
+        course:
+          $ref: '#/components/schemas/LmsCourse'
+        class:
+          $ref: '#/components/schemas/LmsClass'
+        status:
+          type: string
+          enum: ["Not Enrolled", Waiting, Approved, Rejected]
+        cancelled:
+          type: boolean
+        lmsOperationExecutive:
+          type: any
+
+    UpdateProductEnrollmentItemPayload:
+      type: object
+      properties:
+        course:
+          type: string
+        class:
+          type: string
+
+    Promotion:
+      type: object
+      properties:
+        promotionType:
+          type: string
+          enum: [SalesmanInput, SelectFromConfig]
+        discountType:
+          type: string
+          enum: [Value, Percent]
+        percent:
+          type: number
+        value:
+          type: number
+
+    UpdateLeadOrderItem:
+      type: object
+      properties:
+        candidate:
+          type: string
+        product:
+          type: string
+        promotion:
+          $ref: '#/components/schemas/Promotion'
+  
+    CreateLeadOrderPayload:
+      type: object
+      properties:
+        orderItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateLeadOrderItem'
+
+    LeadProduct:
+      type: object
+      properties:
+        candidate:
+          $ref: '#/components/schemas/Contact'
+        product:
+          $ref: '#/components/schemas/Product'
+
+    UpdateLeadDetailPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          enum: [updateDetail]
+        payload:
+          type: object
+          properties:
+            channel:
+              type: string
+              enum: [Website, Fanpage, Social, Referral, Native, Email, "Event offline", Other, "Self created", Database]
+            source:
+              type: string
+              enum: [None, Organic, Direct, Ads, Zalo, Instagram, Youtube, Coccoc, Site, "Email marketing", "Email ads", Hotline, Referral, "Direct sale", Resales, Telemarketing, "Event offline"]
+            campaign:
+              type: string
+              enum: [None, Search, Display, Inbox, Comment, Conversion, Lead, Mess, "Post engage", Instream, Outstream, Bumper6, Bumper15, Browserskin, Newtab, Ads, PR, "HV giới thiệu", "PH giới thiệu", "Sale's contact"]
+            medium:
+              type: string
+            content:
+              type: string
+
+    UpdateLeadOwnerPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          example: updateOwner
+          enum: [updateOwner]
+        payload:
+          type: object
+          properties:
+            ids:
+              type: array
+              items:
+                type: string
+            newOwnerId:
+              type: string
+    MakeFamilyMemberCustomerPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          example: makeFamilyMemberCustomer
+          enum: [makeFamilyMemberCustomer]
+    LeadAppointment:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        leadId:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        assigneeId:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        dueAt:
+          type: number
+        status:
+          type: number
+          example: 1
+        finishedAt:
+          type: any
+        title:
+          type: string
+          example: contact
+        time:
+          type: string
+        centreId:
+          type: string
+        currentStatus:
+          type: string
+          enum: [WAITING, FAILED, PASS, CANCEL]
+        createdAt:
+          type: number
+        createdBy:
+          $ref: '#/components/schemas/User'
+    
+    UpdateLeadProductsItem:
+      type: object
+      properties:
+        candidate:
+          type: string
+        product:
+          type: string
+
+    UpdateLeadProductsPayload:
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateLeadProductsItem'
+
+    UpdateLeadCustomerPayload:
+      type: object
+      properties:
+        fullName:
+          type: string
+        gender:
+          type: string
+          enum: [MALE, FEMALE, OTHER]
+        email:
+          type: string
+        address:
+          type: string
+        dob:
+          type: string
+        facebook:
+          type: string
+        zalo:
+          type: string
+        school:
+          type: string
+
+    UpdateLeadFamilyMemberPayload:
+      type: object
+      properties:
+        fullName:
+          type: string
+        phoneNumber:
+          type: string
+        gender:
+          type: string
+          enum: [MALE, FEMALE, OTHER]
+        email:
+          type: string
+        address:
+          type: string
+        dob:
+          type: string
+        facebook:
+          type: string
+        zalo:
+          type: string
+        school:
+          type: string
+        relation:
+          type: string
+          enum: [SON, DAUGHTER, GRAND_SON, GRAND_DAUGHTER, NEPHEW, OTHER]
+
+    PatchResponse:
+      type: object
+      properties:
+        data:
+          type: array
+
+    LeadMessage:
+      type: object
+      properties:
+        messageType:
+          type: string
+          enum: [EMAIL, FACEBOOK_MESSAGE, SMS]
+        success:
+          type: boolean
+        errorMessage:
+          type: string
+        emailInfo:
+          type: object
+          properties:
+            attachments:
+              type: array
+              items:
+                type: string
+            subject:
+              type: string
+            html:
+              type: string
+            bcc:
+              type: string
+        smsInfo:
+          type: any
+        facebookMessageInfo:
+          type: any
+
+    SendEmailPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          example: update
+          enum: [sendEmail]
+        payload:
+          type: object
+          properties:
+            attachments:
+              type: array
+              items:
+                type: string
+            subject:
+              type: string
+            html:
+              type: string
+            bcc:
+              type: string
+            leads:
+              type: array
+              items:
+                type: string
+
+    LeadAppointmentPayload:
+      type: object
+      properties:
+        title:
+          type: string
+        time:
+          type: string
+        centreId:
+          type: string
+        currentStatus:
+          type: string
+          enum: [WAITING, FAILED, PASS, CANCEL]
+
+    LeadNotePayload:
+      type: object
+      properties:
+        content:
+          type: string
+  
+    LeadReminder:
+      type: object
+      properties:
+        _id:
+          type: string
+        title:
+          type: string
+        dueAt:
+          type: string
+        finishedAt:
+          type: string
+        status:
+          type: string
+          enum: [Active, Completed, Canceled]
+        createdAt:
+          type: number
+        createdBy:
+          $ref: '#/components/schemas/User'
+
+    LeadReminderPayload:
+      type: object
+      properties:
+        title:
+          type: string
+        dueAt:
+          type: string
+  
+    LeadReminderUpdatePayload:
+      type: object
+      properties:
+        status:
+          type: string
+          example: Completed
+          enum: ["Active", "Completed", "Canceled"]
+
+    LeadOrderProductItemPayload:
+      type: object
+      properties:
+        candidate:
+          type: string
+          description: _id of candidate
+        product:
+          type: string
+          description: _id of product
+        promotion:
+          $ref: '#/components/schemas/Promotion'
+    Lead:
+      type: object
+      properties:
+        _id:
+          type: string
+        id:
+          type: string
+        centre:
+          type: object
+          properties:
+            _id:
+              type: string
+            name:
+              type: string
+            shortName:
+              type: string
+        sourceId:
+          type: string
+        campaignId:
+          type: string
+        owner:
+          type: object
+          properties:
+            id:
+              type: string
+            firstName:
+              type: string
+            lastName:
+              type: string
+            avatar:
+              type: string
+        contact:
+          type: object
+          properties:
+            _id:
+              type: string
+            firstName:
+              type: string
+            lastName:
+              type: string
+            phone:
+              type: string
+            email:
+              type: string
+            fb:
+              type: string
+            address:
+              type: string
+            userType:
+              type: string
+        customer:
+          type: object
+          properties:
+            _id:
+              $ref: '#/components/schemas/Contact'
+            fullName:
+              type: string
+            phoneNumber:
+              type: string
+            email:
+              type: string
+            family:
+              type: array
+              items:
+                $ref: '#/components/schemas/FamilyMember'
+        productOrder:
+          type: object
+          properties:
+            _id:
+              type: string
+            comboName:
+              type: string
+            courses:
+              type: array
+              items:
+                type: any
+        tuition:
+          type: object
+          properties:
+            totalAfterDiscount:
+              type: number
+            remaining:
+              type: number
+            completePercent:
+              type: number
+        lastContactedAt:
+          type: string
+        currentStage:
+          type: string
+        currentStatus:
+          type: string
+        v2Status:
+          type: string
+          enum: [L0A, L0B, L1A, L1B, L1C, L2A, L2B, L2C, L2D, L2E, L2F, L2G, L2X, L3A, L3B, L3C, L4A, L4B, L5A, L5B, L5C]
+        lastUpdatedStageAt:
+          type: string
+        overdueStatusAt:
+          type: string
+        paymentDueAt:
+          type: string
+        recentTaskDueAt:
+          type: string
+        recentAppointmentDueAt:
+          type: string
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeadMessage'
+        reminders:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeadReminder'
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeadNote'
+        appointments:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeadAppointment'
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeadProduct'
+        order:
+          type: object
+          properties:
+            code:
+              type: number
+            productItems:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeadOrderItem'
+            isCancelled:
+              type: boolean
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeadPaymentItem'
+        refunds:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeadRefundItem'
+    
+    LeadOrderItem:
+      type: object
+      properties:
+        candidate:
+          $ref: '#/components/schemas/Contact'
+        product:
+          $ref: '#/components/schemas/Product'
+        promotion:
+          $ref: '#/components/schemas/Promotion'
+        enrollments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductEnrollmentItem'
+    
+    LeadPaymentItem:
+      type: object
+      properties:
+        amount:
+          type: number
+        payday:
+          type: string
+        note:
+          type: string
+    
+    LeadRefundItem:
+      type: object
+      properties:
+        amount:
+          type: number
+        payday:
+          type: string
+        note:
+          type: string
+    
+    CreateLeadPayload:
+      type: object
+      properties:
+        overwrite:
+          type: boolean
+        contactId:
+          type: string
+        contactInfo:
+          type: object
+          properties:
+            fullName:
+              type: string
+            phoneNumber:
+              type: string
+            gender:
+              type: string
+              enum: [MALE, FEMALE, OTHER]
+            email:
+              type: string
+            address:
+              type: string
+            dob:
+              type: string
+            facebook:
+              type: string
+            zalo:
+              type: string
+            school:
+              type: string
+        leadInfo:
+          type: object
+          properties:
+            status:
+              type: string
+              enum: [L0A, L0B, L1A, L1B, L1C, L2A, L2B, L2C, L2D, L2E, L2F, L2G, L2X, L3A, L3B, L3C, L4A, L4B, L5A, L5B, L5C]
+              example: L1A
+            channel:
+              type: string
+              enum: [Website, Fanpage, Social, Referral, Native, Email, "Event offline", Other, "Self created", Database]
+            source:
+              type: string
+              enum: [None, Organic, Direct, Ads, Zalo, Instagram, Youtube, Coccoc, Site, "Email marketing", "Email ads", Hotline, Referral, "Direct sale", Resales, Telemarketing, "Event offline"]
+            campaign:
+              type: string
+              enum: [None, Search, Display, Inbox, Comment, Conversion, Lead, Mess, "Post engage", Instream, Outstream, Bumper6, Bumper15, Browserskin, Newtab, Ads, PR, "HV giới thiệu", "PH giới thiệu", "Sale's contact"]
+            medium:
+              type: string
+              enum: [Keyword, None, Banner, Landing, Form, Chat, Video, Cpm, Cpc, Cpd, Funnel, Cold data]
+            content:
+              $ref: '#/components/schemas/Campaign'
+    
+    FindLeadsResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Lead'
+        before:
+          type: string
+        after:
+          type: string
+        count:
+          type: number
+    
+    UpdateLeadStatusPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          example: updateStatus
+          enum: [updateStatus]
+        payload:
+          type: object
+          properties:
+            statusName:
+              type: string
+              example: L3A - ...
+
+  requestBodies:
+    LeadAppointmentPayload:
+      description: Lead appointment payload
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LeadAppointmentPayload'
+
+    LeadNotePayload:
+      description: Lead note payload
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LeadNotePayload'
+
+    LeadReminderPayload:
+      description: Lead reminder payload
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LeadReminderPayload'
+
+    LeadReminderUpdatePayload:
+      description: Lead reminder update payload
+      content:
+         application/json:
+          schema:
+            $ref: '#/components/schemas/LeadReminderUpdatePayload'
+
+    CreateLeadPayload:
+      description: Create Lead Payload
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateLeadPayload'
+
+    UpdateLeadPayload:
+      description: Update Lead Payload
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/UpdateLeadDetailPayload'
+              - $ref: '#/components/schemas/SendEmailPayload'
+              - $ref: '#/components/schemas/UpdateLeadStatusPayload'
+              - $ref: '#/components/schemas/UpdateLeadOwnerPayload'
+              - $ref: '#/components/schemas/UpdateLeadOwnerPayload'
+              - $ref: '#/components/schemas/MakeFamilyMemberCustomerPayload'
+

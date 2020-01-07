@@ -1,0 +1,237 @@
+openapi: 3.0.0
+tags:
+  - name: centre
+    description: Admin operations about centre
+paths:
+  /centre/{centreId}:
+    get:
+      tags:
+        - centre
+      summary: Find centre by id
+      operationId: findCentreById
+      parameters:
+        - name: centreId
+          in: path
+          description: centreId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Centre'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    patch:
+      tags:
+        - centre
+      summary: Update centre
+      operationId: updateCentre
+      parameters:
+        - name: centreId
+          in: path
+          description: centreId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateCentrePayload'
+      responses:
+        200:
+          description: successful operation
+        201:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /centre:
+    get:
+      tags:
+        - centre
+      summary: Get Centre
+      operationId: getCentres
+      parameters:
+        - in: query
+          name: assignable
+          description: Only get centres to assign
+          schema:
+            type: boolean
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindAllCentresResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      
+      security:
+        - Bearer: []
+    post:
+      tags:
+        - centre
+      summary: Create centre
+      operationId: createCentre
+      requestBody:
+        $ref: '#/components/requestBodies/CreateCentrePayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Centre'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Centre'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /centre/get-all-centre:
+    get:
+      tags:
+        - centre
+      summary: getAllCentres
+      operationId: getAllCentres
+      parameters:
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindAllCentresResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /centre/sync:
+    get:
+      tags:
+        - centre
+      summary: synchronizeCentre
+      operationId: synchronizeCentre
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindAllCentresResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+components:
+  schemas:
+    FindCentresResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Centre'
+        before:
+          type: string
+        after:
+          type: string
+    FindAllCentresResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Centre'
+    UpdateCentrePayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          example: update
+          enum: [updateDetail]
+        payload:
+          type: object
+          $ref: '#/components/schemas/Centre'
+    Centre:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        id:
+          type: string
+          example: 4ddde319cf4cc467858e8152b58b3283
+        name:
+          type: string
+          example: admin
+        shortName:
+          type: string
+          example: admin
+        description:
+          type: string
+          example: admin who can view, create, edit, delete
+        isActive:
+          type: boolean;
+          example: true
+    CreateCentrePayload:
+      type: object
+      properties:
+        name:
+          type: string
+          example: admin
+        description:
+          type: string
+          example: admin
+  requestBodies:
+    UpdateCentrePayload:
+      description: Update centre params
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/UpdateCentrePayload'
+    CreateCentrePayload:
+      description: Create centre params
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateCentrePayload'
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

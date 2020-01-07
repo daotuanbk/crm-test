@@ -1,0 +1,117 @@
+openapi: 3.0.0
+tags:
+  - name: LMS Classe
+    description: Class from LMS
+paths:
+  /lms-classes/{lmsClassId}:
+    get:
+      tags:
+        - lmsclass
+      summary: findLmsClassById
+      operationId: findLmsClassById
+      parameters:
+        - name: lmsClassId
+          in: path
+          description: lmsClassId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LmsClass'
+        201:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /lms-classes:
+    get:
+      tags:
+        - lmsclass
+      summary: Find Lms classes
+      operationId: findLmsClasses
+      parameters:
+        - name: search
+          in: query
+          description: search
+          required: false
+          schema:
+            type: string
+        - name: lmsCourse
+          in: query
+          description: Lms Course to find
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: limit
+          in: query
+          description: number of records returned
+          required: false
+          schema:
+            type: number
+            default: 20
+        - name: page
+          in: query
+          description: current page
+          required: false
+          schema:
+            type: number
+            default: 1
+        - name: sortBy
+          in: query
+          description: sort field
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindLmsClassResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+components:
+  schemas:
+    FindLmsClassResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/LmsClass'
+        count:
+          type: number
+    LmsClass:
+      type: object
+      properties:
+        _id:
+          type: string
+        title:
+          type: string
+        status:
+          type: string
+        startTime:
+          type: string
+        endTime:
+          type: string
+        descripttion:
+          type: string

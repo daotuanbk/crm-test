@@ -1,0 +1,56 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "*": ["types/*"],
+      "@src": ["src"],
+      "@app/core": ["src/server/core"],
+      "@app/auth": ["src/server/modules/auth"],
+      "@app/config": ["src/server/config"],
+      "@app/crm" : ["src/server/modules/crm"],
+      "@app/website": ["src/server/modules/website"],
+      "@client/*": ["src/client/*"],
+      "@common/*": ["src/common/*"]
+    },
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "preserve",
+    "lib": [
+      "dom",
+      "es2015",
+      "es2016",
+      "es2017"
+    ],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "./dist",
+    "preserveConstEnums": true,
+    "removeComments": false,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "esModuleInterop": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "target": "esnext",
+    "typeRoots": [
+      "./node_modules/@types",
+      "./types"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "types"
+  ],
+  "include": [
+    "**/*.ts", "src/server/modules/crm/aggregates/leads/custom-services/update-owner.service"
+  ]
+}

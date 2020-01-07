@@ -1,0 +1,14 @@
+{
+  "internalServerError": "Internal Server Error",
+  "missingId": "Không tìm thấy Id",
+  "invalidEmail": "Email không hợp lệ",
+  "emailRequired": "Vui lòng nhập email",
+  "invalidPasswordRegex": "Mật khẩu tối thiểu 6 kí tự, ít nhất 1 chữ cái, 1 số tự nhiên và 1 kí tự đặc biệt",
+  "passwordRequired": "Vui lòng nhập mật khẩu",
+  "familyNameRequired": "Vui lòng nhập Họ",
+  "tooShort": "Quá ngắn",
+  "tooLong": "Quá dài",
+  "givenNameRequired": "Vui lòng nhập Tên",
+  "emailExist": "Email đã bị sử dụng",
+  "test": "This is user module VN"
+}

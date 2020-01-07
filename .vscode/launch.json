@@ -1,0 +1,39 @@
+{
+  "configurations": [{
+      "env": {
+        "NODE_CONFIG_DIR": "./src/server/config",
+        "NODE_ENV": "develop"
+      },
+      "name": "Launch Program (Debug)",
+      "outFiles": [
+        "${workspaceFolder}/dist/**/*.js"
+      ],
+      // "preLaunchTask": "tsc-watch",
+      "program": "${workspaceFolder}/dist/index.js",
+      "request": "launch",
+      "type": "node"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch in Docker",
+      "preLaunchTask": "tsc-watch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "docker-debug"],
+      "port": 9222,
+      "restart": true,
+      "timeout": 60000,
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/server",
+      "outFiles": [
+        "${workspaceFolder}/dist/**/*.js"
+      ],
+      "skipFiles": [
+        "<node_internals>/**/*.js",
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    }
+  ],
+  "version": "0.2.0"
+}

@@ -1,0 +1,53 @@
+.mail-container {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 350px auto;
+  grid-template-rows: 60px auto 60px;
+  grid-column-gap: 1px;
+  grid-row-gap: 1px;
+  height: 85vh;
+
+  .container {
+    padding: 10px;
+  }
+  
+  .scrollable {
+    position: relative;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .sidebar {
+    background: white;
+    grid-row-start: 1;
+    grid-row-end: span 3;
+  }
+  
+  .content {
+    background: white;
+    grid-row-start: 1;
+    grid-row-end: span 3;
+  }
+}
+
+.compose-wrapper{
+  text-align: center;
+
+  input {
+    border-bottom: 1px solid #EEEEEE;
+    border-top: 0px;
+    border-right: 0px;
+    border-left: 0px;
+    width: 100%;
+  }
+  
+  textarea {
+    width: 100%;
+    border: 0px;
+  }
+}
+
+.footer {
+  grid-column-start: 2;
+  background: white;
+}

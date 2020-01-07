@@ -1,0 +1,47 @@
+.messenger {
+  width: 100%;
+  height: 60vh;
+  background: #eeeef1;
+
+  grid-column-gap: 1px;
+  grid-row-gap: 1px;
+
+  .container {
+    padding: 10px;
+  }
+
+  .scrollable {
+    position: relative;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sidebar {
+    background: white;
+    grid-row-start: 1;
+    grid-row-end: span 3;
+  }
+
+  .content {
+    background: white;
+    grid-row-start: 1;
+    grid-row-end: span 3;
+    height: 100%;
+  }
+
+  .footer {
+    grid-column-start: 2;
+    background: white;
+  }
+
+  .message-list{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    
+    .message-list-container{
+      flex-grow: 1;
+      height: 100%;
+    }
+  }
+}

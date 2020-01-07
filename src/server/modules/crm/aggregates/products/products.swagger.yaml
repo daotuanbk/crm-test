@@ -1,0 +1,315 @@
+openapi: 3.0.0
+tags:
+  - name: products
+    description: Admin operations about products
+paths:
+  /products/{productId}:
+    get:
+      tags:
+        - products
+      summary: findProductById
+      operationId: findProductById
+      parameters:
+        - name: productId
+          in: path
+          description: productId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        201:
+          description: successful operation
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    patch:
+      tags:
+        - products
+      summary: Update product
+      operationId: updateProduct
+      parameters:
+        - name: productId
+          in: path
+          description: productId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/UpdateProductPayload'
+                - $ref: '#/components/schemas/ActivateProductPayload'
+                - $ref: '#/components/schemas/DeactivateProductPayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+  /products:
+    get:
+      tags:
+        - products
+      summary: Find products
+      operationId: findProducts
+      parameters:
+        - name: search
+          in: query
+          description: search
+          required: false
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: product type filter
+          required: false
+          schema:
+            type: array
+            collectionFormat: multi
+            items:
+              type: string
+        - name: category
+          in: query
+          description: product category filter
+          required: false
+          schema:
+            type: array
+            collectionFormat: multi
+            items:
+              type: string
+        - name: productLine
+          in: query
+          description: product line filter
+          required: false
+          schema:
+            type: array
+            collectionFormat: multi
+            items:
+              type: string
+        - name: isActive
+          in: query
+          description: product status filter
+          required: false
+          schema:
+            type: boolean
+        - name: limit
+          in: query
+          description: number of records returned
+          required: false
+          schema:
+            type: number
+            default: 20
+        - name: page
+          in: query
+          description: current page
+          required: false
+          schema:
+            type: number
+            default: 1
+        - name: sortBy
+          in: query
+          description: sort field
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindProductsResult'
+        400:
+          description: bad request
+        401:
+          description: unauthorize
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+    post:
+      tags:
+        - products
+      summary: Create product
+      operationId: createProduct
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProductPayload'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        400:
+          description: bad request
+        401:
+          description: Token is invalid or expired
+        500:
+          description: internal server error
+      security:
+        - Bearer: []
+components:
+  schemas:
+    UpdateProductPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          enum: [updateDetail]
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+            price:
+              type: number
+            isActive:
+              type: boolean
+            selectableCourses:
+              type: array
+              items:
+                type: string
+    CreateProductPayload:
+      type: object
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+        price:
+          type: number
+        category:
+          type: string
+          enum: [Teens, Kids, "18"]
+        productLine:
+          type: string
+          enum: [Game, Web, Other, C4E, App, Data]
+        type:
+          type: string
+          enum: [Single, Combo, Special]
+        course:
+          type: string
+        maxCourses:
+          type: number
+        maxDuration:
+          type: number
+        selectableCourses:
+          type: array
+          items:
+            type: string
+        isActive:
+          type: boolean
+    FindProductsResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        count:
+          type: number
+    DeactivateProductPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          enum: [deactivate]
+        payload:
+          type: any
+    ActivateProductPayload:
+      type: object
+      properties:
+        operation:
+          type: string
+          enum: [activate]
+        payload:
+          type: any
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        code:
+          type: string
+        price:
+          type: number
+        category:
+          type: string
+          enum: [Teens, Kids, "18"]
+        productLine:
+          type: string
+          enum: [Game, Web, Other, C4E, App, Data]
+        type:
+          type: string
+          enum: [Single, Combo, Special]
+        single:
+          type: object
+          properties:
+            course:
+              $ref: '#/components/schemas/LmsCourse'
+        combo:
+          type: object
+          properties:
+            maxCourses:
+              type: number
+            selectableCourses:
+              type: array
+              items:
+                $ref: '#/components/schemas/LmsCourse'
+        special:
+          type: object
+          properties:
+            maxDuration:
+              type: number
+            selectableCourses:
+              type: array
+              items:
+                $ref: '#/components/schemas/LmsCourse'
+        isActive:
+          type: boolean
+        createdAt:
+          type: number
+        createdBy:
+          $ref: '#/components/schemas/User'
