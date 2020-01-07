@@ -10,10 +10,10 @@ npm
 
 ## Getting Started
 
-1. Restore database: npm run dumpdb
+1. Restore database: `npm run dumpdb`
 2. Run mongodb
-3. Start project: npm run dev-fe
+3. Start project: `npm run dev-fe`
 
 ## Build and Test
 
-Build: npm run build
+Build: `npm run build`
