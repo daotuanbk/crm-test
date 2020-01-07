@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"techkids-edu-crm.centres"},{"v":2,"key":{"_fts":"text","_ftsx":1},"name":"name_text","ns":"techkids-edu-crm.centres","default_language":"english","background":true,"weights":{"name":1},"language_override":"language","textIndexVersion":3}],"uuid":"a6ca69089c9c41e5bb6f0a632b3634cb"}

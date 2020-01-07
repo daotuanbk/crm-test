@@ -220,7 +220,8 @@
     "dev-all-fe": "yarn build-dev-fe & NO_CRON_JOB=true NO_QUEUE=true node ./dist/client-standalone.js",
     "dev-all-be:withQueue": "yarn watch-dev-be & NO_CRON_JOB=true nodemon --watch ./dist/server --watch ./dist/common --nolazy ./dist/server-standalone.js",
     "build-server": "babel src --out-dir dist --extensions \".ts,.tsx\" --source-maps inline",
-    "watch-new": "babel src --out-dir dist --extensions \".ts,.tsx\" --source-maps inline --watch"
+    "watch-new": "babel src --out-dir dist --extensions \".ts,.tsx\" --source-maps inline --watch",
+    "initdb": "mongorestore -d techkids-edu-crm ./dumpdb"
   },
   "types": "dist/index.d.ts",
   "version": "0.1.0"
